@@ -1,0 +1,15 @@
+ Volume in drive C is TI10653500D
+ Volume Serial Number is 940F-D008
+
+ Directory of C:\Users\Public\Documents\project_quizsite\public\js
+
+03/28/2021  03:55 AM    <DIR>          .
+03/28/2021  03:55 AM    <DIR>          ..
+08/26/2020  03:37 PM             2,546 confess.js
+07/29/2020  05:01 PM            39,970 jquery-comments.min.js
+04/23/2020  12:20 PM            21,815 jquery.smartmenus.min.js
+08/03/2020  10:27 AM            29,528 localforage.min.js
+03/28/2021  03:55 AM                 0 original.txt
+03/28/2021  01:51 AM             7,995 ques.js
+               6 File(s)        101,854 bytes
+               2 Dir(s)   1,084,493,824 bytes free

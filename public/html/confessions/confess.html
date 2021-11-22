@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Confession| write</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], textarea{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus,textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+
+</head>
+<body>
+<div class="w3-bar w3-black">
+  <a class="w3-bar-item w3-button tablink" href="https://www.sukuuhub.com/confessions">Home</a>
+</div>
+
+<form id="LogIn" method="post" class="w3-container city" action="/confessions/post/confession">
+ <div class="w3-container">
+    <h1>Confess</h1>
+	<p id="message" class="w3-text-red">
+	Write your story/ confession here!
+    </p><hr>
+	<div class="container"><label style="margin:10px;">
+      <input type="checkbox" name="anon" value="a" 
+	  title="check this box to remain anonymous"> Anonymous
+    </label >
+		
+  </div>
+    <label for="name"><b>TITLE </b>*</label>
+    <input type="text" placeholder="title here" name="title" required>
+<label for="name"><b>School</b></label>
+    <input type="text" placeholder="title here" name="sch">
+    <label for="pwd"><b>Story/confession</b> *</label>
+    <textarea placeholder="write here" name="story" required></textarea>
+            <label for="tags"><b>Tags</b> *</label>
+    <textarea placeholder="tags separated by a comma" name="tags" required></textarea>
+    
+   
+  </div>
+
+  <div class="w3-bar w3-padding-32" style="background-color:#f1f1f1">
+    <button type="button" class="w3-button w3-bar-item w3-red">Cancel</button>
+    <button type="submit" class="w3-button w3-bar-item w3-blue">Submit</button>
+  </div>
+</form>
+
+  
+    
+    <p>By writing your text you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+</body>
+<script>
+var m,tags,story,title;
+window.onload=function(){
+document.forms[0].onsubmit=function(e){
+m=document.getElementById('message');
+tags=this.tags.value.split(',');
+story=this.story.value;
+title=this.title.value;
+if (title.length < 3) {
+m.textContent="title is too short";
+return false;}
+if (tags.length < 3) {
+m.textContent="there must be at least 3 tags";
+return false;}
+if (story.length < 25) {
+m.textContent="story/confession is too short";
+return false;}
+tags.push('shs');
+this.tags.value=tags.join(',');
+}
+}
+</script>
+</html>

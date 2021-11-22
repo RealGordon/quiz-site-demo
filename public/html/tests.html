@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<title>SH | Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="/file/w3.css">
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
+<body>
+<div class="w3-bar w3-black">
+   <a class="w3-bar-item w3-button tablink" href="/">Home</a>
+  <a href="/testupdate" id="signbut" class="w3-bar-item w3-button tablink">Create Test</a>
+ 
+  <button id="logbut" class="w3-bar-item w3-button tablink">Edit Test</button>
+</div>
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+  <div class="w3-display-topleft w3-padding-large w3-xlarge">
+    QB
+  </div>
+  <div class="w3-display-middle">
+  <form id="take" method="post" action="/test/form" class="city">
+
+    <h1 class="w3-jumbo w3-animate-top">Test</h1>
+	<p class="w3-large w3-center">Enter Test ID</p>
+	<div class="w3-center">
+	<div class="w3-container">
+	<label for="test_id"> Test ID  </LABEL>
+	<input name="test_id"  class="w3-margin">
+	</div>
+	<div class="w3-container">
+	<label for="s_id"> Candidate ID</LABEL>
+	<input name="s_id"  class="w3-margin">
+	</div>
+	<div class="w3-container">
+	<input type="submit" class="w3-margin">
+	</div>
+	</div>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+     </form>
+  </div>
+ <div class="w3-display-middle">
+  <form style="display: none" id="edit" method="post" action="/tests/edit" class="city">
+
+    <h1 class="w3-jumbo w3-animate-top">Test</h1>
+	<p class="w3-large w3-center">To Edit Test</p>
+	<div class="w3-center">
+	<div class="w3-container">
+	<label for="test_id"> Test ID  </LABEL>
+	<input name="test_id"  class="w3-margin">
+	</div>
+	
+	<div class="w3-container">
+	<input type="submit" class="w3-margin" value="Edit">
+	</div>
+	</div>
+    <hr class="w3-border-grey" style="margin:auto;width:40%">
+ 
+  </form>
+  </div>
+  <div class="w3-display-bottomleft w3-padding-large">
+    Powered by <a href=# >gapconsult</a>
+  </div>
+</div>
+<script>
+window.onload=function () {
+document.getElementById('logbut').onclick=function (evt) {
+  var i, x, cityName;
+  x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+ 
+  if (this.textContent=="Edit Test") {
+  this.textContent="Take Test";cityName='take';
+  }
+  else {this.textContent="Edit Test";cityName='edit';}
+  document.getElementById(cityName).style.display = "block";}}
+ </script>
+</body>
+</html>
