@@ -1,6 +1,6 @@
 # quiz-site-demo
 
- website for quizes site  using Flask,Google App engine, Firestore and Google cloud Storage
+ educational website  using Flask, Google App engine, Firestore and Google cloud Storage
 
 `public/` -   HTML , CSS and JS Files
 
