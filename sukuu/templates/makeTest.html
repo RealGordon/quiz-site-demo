@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="/static/js/sukuu/makeTest.js"></script>
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+
+/* Full-width input fields */
+input[type=text], input[type=password] ,input[type=email],input[type=date],input[type=phone],input[type=tel]{
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus ,input[type=email]:focus,input[type=date]:focus,input[type=phone]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}
+</style>
+<!-- <script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="w3-bar w3-black">
+<a class="w3-bar-item w3-button tablink" href="/"> Home </a>
+  
+
+  
+</div>
+
+
+<form name="testmeta" class="w3-container city" method="post">
+  <div class="w3-container">
+    <h1>QB</h1>
+    <p id="message">Add questions</p>
+	
+    <hr>
+	
+	
+	<label for="name"><b>Test Creator </b></label>
+    <input type="text" name="creator" required><div class="container w3-margin">
+	<label for="name"><b>Test Title </b></label>
+    <input type="text" name="title" required><div class="container w3-margin">
+	<div class="w3-container">
+	<label class="w3-margin">
+      <input type="checkbox" name="nodate" value="N" onclick="noDeadline();" > No deadline
+    </label></div>
+	<label for="name"><b>Test Date </b></label>
+    <input type="date" name="date">
+	
+	<div class="w3-container w3-margin"> 
+	 <p>For specific Time scheduled test<p>
+	 <input type="radio" class="w3-radio" name="time_method" 
+   onclick="disableTime.call(this);" value="schedule">
+	 <small>the test will be available for only this specified time slots</small>
+	 
+	<p><label for="stime"><b>Start Time </b></label>
+    <input type="time" name="stime"></p>
+	<p><label for="etime"><b>End Time </b></label>
+    <input type="time" name="etime" ></p></div>
+	
+	<div class="w3-container w3-margin"> 
+	 <p>For test duration test</p>
+	 <input type="radio" class="w3-radio" name="time_method" 
+   onclick="disableTime.call(this);" value="duration">
+	 <small>any candidate can access the test at any time but only for a specific period. Duration in the number of hours</small>
+	 
+	 <p>
+	<label for="duration"><b>Duration </b></label>
+    <input type="number" name="duration"></p></div>
+	
+	
+</form>
+<form name="testUpdate" class="w3-container city"method="post">
+ <div id="questionplate" class="w3-container">
+	<div class="questionarea">
+		<p><b>question 1</b></p>
+		<textarea name="1" class="w3-input question"></textarea>
+		<p class="w3-text-blue">A</p>
+		<textarea name="A" class="w3-input multichoice q1"></textarea>
+		
+		<div class="clearfix" id="choicecontrols">
+		<button onclick="addC(event,this);" type="button" class="signupbtn">Add choice</button>
+		<button onclick="removeC(event,this);" type="button" class="cancelbtn">remove choice</button>
+		</div>
+		
+	</div>
+		
+		
+		
+	</div>
+    <button onclick="addQ(this);" type="button" class="w3-btn w3-blue">ADD  QUESTION</button>
+    <input type="hidden" name="formtype" value="jobinput">
+    <div class="clearfix">
+	
+      <!-- <button type="reset" class="cancelbtn">Cancel</button>
+<button type="submit" class="signupbtn">Post</button>	  -->
+	  <input type="reset" class="w3-margin w3-red w3-btn" value="Cancel">
+	  <input type="submit" class="w3-margin w3-blue w3-btn" value="Submit">
+      
+    </div>
+  </div>
+</form>
+
+</body>
+<script>
+
+function respf(r,s){if (s=="success") {
+  $("#message").text(r);
+  document.testmeta.style.dispay="none";
+  document.testUpdate.style.display="none";
+  }};
+  
+
+function addC(e,th) {var c,qn,t,p,el,pr,s,parN;
+var d=document;
+el=th||e.target;parN=el.parentNode.parentNode;qn=parN.children[1];
+t=d.createElement("textarea");t.placeholder="add option here";
+t.className="w3-input multichoice q"+qn.name;p=d.createElement("p");
+pr=el.parentNode.previousElementSibling;
+if (pr.name !== qn.name) {
+//l=pr.name.split('_');c=l[l.length-1].charCodeAt(0);
+//s=String.fromCharCode(c+1)}
+c=pr.name.charCodeAt(0);if (c==69) return;
+s=String.fromCharCode(c+1)}
+else {//l=qn.name.split("_");s="A";
+s="A";}
+p.className="w3-text-blue";
+//t.name=l[0]+'_'+l[1]+'_'+s;
+p.textContent=t.name=s;
+parN.insertBefore(p,el.parentNode);
+parN.insertBefore(t,el.parentNode);}
+
+
+var ques_data={};
+function removeC(e,th) {
+el=th||e.target;
+var l=document.getElementsByClassName("multichoice");
+if (l.length!==0){
+el.parentNode.parentNode.removeChild(l[l.length-1].previousElementSibling);
+el.parentNode.parentNode.removeChild(l[l.length-1]);}
+}
+
+
+function noDeadline(){ 
+var el=$("input[type='date']")[0];
+if (el.disabled) {el.disabled=false;}
+else el.disabled=true}
+
+function addQ(th) {
+var q=[],el,name;
+el=$(".question");name=el[el.length-1].name;
+if (Number(name)==10) return;
+var l=['div','p','input','textarea'];
+l.forEach(function (p,i){
+ el=q[i]=document.createElement(p);
+ if (i==1) {el.textContent="question "+(Number(name)+1);
+ }
+ else if (i==2) {el.type="checkbox";
+ q[1].appendChild(el);var b=document.createElement("input");
+b.onclick=delOp;b.value="delete";b.type="button";
+b.className="w3-blue w3-margin"; 
+q[1].appendChild(b);}
+ else if (i==3) {el.className="w3-input question";
+ el.name=String(Number(name)+1);el.placeholder="add question here";}
+ else el.className="questionarea";
+ if (i>0 && i!==2) q[0].appendChild(el);
+ else if (i!==2){$("#questionplate")[0].appendChild(el)}})
+//el[el.length-1].parentNode.insertAfter(,el);
+$('#choicecontrols').clone(true).appendTo(q[0]);}
+function delOp(){
+if (this.previousElementSibling.checked) {
+this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)}}
+</script>
+</html>

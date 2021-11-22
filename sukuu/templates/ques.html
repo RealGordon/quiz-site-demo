@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title%}Questions{% endblock%}
+{% block myformat %}
+<script type="text/javascript" src="/static/js/jquery-comments.min.js"></script>
+<script type="text/javascript" src="/static/js/sukuu/ques.js"></script>
+<script type="text/javascript" src="/static/js/localforage.min.js"></script>
+{% endblock %}
+{% block css%}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-comments.css">
+{% if g.math %}<link href="https://fred-wang.github.io/mathml.css/mathml.css" rel="stylesheet">
+    {% endif %}{% endblock%}
+{% block content %}
+<div class="w3-main" style="margin:10px auto 10px 100px;">
+<div class="w3-twothird w3-container"><h1>{{g.subject}}, {{g.year}}</h1></div>
+<div class="w3-light-grey w3-round-xlarge" style="display:none;">
+    <div id="qProgress" class="w3-container w3-blue w3-round-xlarge w3-center" style="width:25%">0</div></div>
+<div id="quizarea" class="w3-twothird w3-container" ><p class="question" id="passq"></p>
+<div class="w3-light-grey w3-round-xlarge" style="display:none;">
+    <div id="loadingProgress" class="w3-container w3-blue w3-round-xlarge w3-center" style="width:25%">0</div></div>
+	<div class="w3-container w3-card-4 w3-round-xlarge">
+		<ul id="passa" class="w3-ul"></ul>
+		
+		
+<div id="quesNav" class="w3-center w3-padding-32"><div class="w3-bar">
+<button onclick="nextSlide(false,event)" class="w3-button w3-blue">&lt; PREVIOUS</button><button class="w3-button w3-blue" onclick="nextSlide(true,event)"> NEXT &gt;</button>
+</div></div>
+</div>
+</div>
+<div id="commContainer" class="w3-twothird w3-container" >
+<div class="w3-bar"><button id="v-comm" class="w3-btn w3-black w3-bar-item" onclick="dComments(event);" >Comments</button><button id="correctAnswer" class="w3-btn w3-blue w3-bar-item" onclick="correctAnswer(event);" >View answer</button><span class="w3-bar-item"></span></div><p id="answerArea"></p>
+
+<div id="ucomments" class="w3-container w3-padding-32" style="max-width: 670px">
+<p>All users are encouraged to present their solutions(if applicable) in the comments so that every one in the community can benefit. If you agree with another person's solution then you can give the person's solution a "like".<p>
+</p>
+<div class="w3-container" id="comments-container"></div>
+</div></div></div>
+ {% endblock %}{% block scripts%}
+ <script type="text/javascript">
+var quizarea,eltq,elta,user,dispComments,postCom;
+var qyear="{{g.year}}";
+var qsubject="{{g.subject}}";
+var qdata={{g.questions|tojson}};
+var myans={{g.answers|tojson}};
+var Qmax={{g.max|int}};
+user={Id:"{{g.user.user_id}}",nick:"{{g.user.nick}}" };
+
+eltq=document.getElementById('passq');
+elta=document.getElementById('passa');
+quizarea=document.getElementById("quizarea");
+var qlength=null;
+var qcount=null;
+var posts=document.getElementById('posts');
+$(qdisplay);
+var cA=document.createTextNode(" ");
+$("#correctAnswer")[0].parentNode.appendChild(cA);
+var qOps=["A","B","C","D","E"];
+var submitAns={};
+var qmax=0;
+var qmin=100;
+var fdata=new Array();
+var mqcount;
+
+
+
+</script>
+{% endblock%}

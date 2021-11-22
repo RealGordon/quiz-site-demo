@@ -1,0 +1,167 @@
+﻿{% extends 'base.html'%}{% block title%}BECE/WASSCE Home {% endblock%}
+{% block meta%}
+<meta name="description" content="Sukuuhub.com is platform that provides access to past questions and answers for both WASSCE and BECE candidates in The Gambia, Ghana, Liberia, Nigeria and Sierra Leone.">
+<meta name="keywords" content="waec,wassce,bece,past questions,shs,jhs,final exams,passco">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Free past questions and answers for both WASSCE and BECE candidates in The Gambia, Ghana, Liberia, Nigeria and Sierra Leone.">
+<meta property="og:url"    content="https://www.sukuuhub.com" />
+<meta property="og:title"  content="WASSCE Past Questions and Answers 2020,2019,2018,etc." />
+<meta property="og:image"  content="{{g.fbim|join}}" />
+{% endblock %}
+{% block css %}{{super()}}
+<style type="text/css">
+/* Style the button that is used to open and close the collapsible content */
+.mycollapsible {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .mycollapsible:hover {
+  background-color: #ccc;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.mycontent {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+.mycollapsible:after {
+  content: '\02795'; /* Unicode character for "plus" sign (+) */
+  font-size: 13px;
+  color: white;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+</style>{% endblock %}
+{% block content %}<nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
+ <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black" title="Close Menu">
+    <span class="sub-arrow">+</span></a>
+	<h4 class="w3-bar-item"><b>Menu</b></h4>
+	{%for category,v in menu.items()%}
+   <div class="w3-dropdown-hover">
+<button class="w3-button" onclick="myFunction(event)">{{category}}<span class="sub-arrow"> +</span></button>
+	<div class="w3-dropdown-content w3-white w3-card-4">
+			{% for s in v %}<div class="w3-dropdown-click">
+				<button class="w3-button" onclick="postDisplay(event);">{{loop.index}}.{{s}}</button>
+			</div>
+			{% endfor %}
+			</div>
+			</div>
+{% endfor%}</nav>
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+<div id="mainarea" class="w3-main" style="margin-left:250px">
+
+
+
+ <div class="w3-twothird w3-container w3-padding-32">
+ 
+      <h1 class="w3-text-teal">WAEC/WASSCE Past Questions</h1>
+	  <p id="loginMessage" class="w3-text-red">{% for m in get_flashed_messages()%}{% if m %} {{m}} {% endif %}{% endfor %}</p>
+<ul id="posts">
+{% if latest %}{% for post in latest %}
+<li><button type="button" class="mycollapsible">{{post}}</button><ul class="mycontent">
+{% for y in latest[post] %}
+				<li><a onclick="goToQuestions(event);" class="w3-button" 
+				href="javascript:void(0)">{{y}}</a></li>{% endfor %}</ul>
+</li>{% endfor %}{%  endif %}
+</ul>
+
+
+ 
+
+  
+</div>   <div id="myads" class="w3-third w3-container">
+      <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
+      <p class="w3-border w3-padding-large w3-padding-64 w3-center">AD</p>
+    </div>
+<footer id="myFooter" class="w3-container">
+
+<p>designed by gap consult. contact: sukuuhubonline@gmail.com</p>
+<p>All rights reserved</p>
+</footer>
+
+<!-- End Main -->
+</div>
+{% endblock %}
+{%block scripts%}<script type="text/javascript">
+var menu={{ g.menu | tojson }};
+var qyear;
+var qsubject;
+var social_login;
+var posts=document.getElementById('posts');
+var mySidebar = document.getElementById("mySidebar");
+var overlayBg = document.getElementById("myOverlay");
+function postDisplay(event){
+var t=event.target;
+qsubject=t.textContent.split(".")[1];
+var category=t.parentNode.parentNode.previousElementSibling.childNodes[0].nodeValue;
+var v=menu[category];
+var s=document.createElement('span');
+posts.innerHTML="";
+s.textContent=qsubject;
+var fl=document.createElement('li');
+var ul=document.createElement('ul');
+fl.appendChild(s);
+fl.appendChild(ul);
+posts.appendChild(fl);
+for (var i in v[qsubject]){
+var l=document.createElement('li');
+var a=document.createElement('a');
+a.textContent=v[qsubject][i];
+a.onclick=goToQuestions;
+a.href="javascript:void(0)";
+l.appendChild(a);
+ul.appendChild(l);}
+};
+function goToQuestions(event){
+function k(res) {
+var e=event||window.event;
+var t=e.target;
+qyear=t.textContent;
+qsubject=t.parentNode.parentNode.previousSibling.textContent;
+window.location="{{url_for('queryquestions.ques')}}"+"?l=shs&s="+qsubject+"&y="+qyear;}
+k();}
+</script>
+<script>
+function myFunction(event) {
+  var x = event.target.nextElementSibling;
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+var coll = document.getElementsByClassName("mycollapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+{% endblock %}

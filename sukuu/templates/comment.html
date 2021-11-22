@@ -1,0 +1,31 @@
+﻿{% if g.comments %}
+ {% for k,data in g.comments.items() if loop.index0 < 10 %}
+ <div class="w3-panel w3-border w3-light-grey w3-round-large">
+  <div class="w3-bar">
+<a class="w3-bar-item w3-button" href="#">{{data['f'][0] if  data['f'][1]!=g.user.user_id else 'you'}}</a>
+{% if data['to'].__len__()==2 %}
+<a class="w3-bar-item w3-button" href="#">to: {{data['to'][0] if  data['to'][1]!=g.user.user_id else 'you'}}  </a>
+{% endif %}
+	<span class="w3-bar-item w3-button">{{data['t'].strftime('%a, %d %b %Y')}} </span></div>
+	{% if data['to'].__len__()==2 %}
+	<input type="hidden" value="{{data['to'][1]}}" name="to">{% else %}
+	<input type="hidden" value="m" name="to">
+	{% endif %}
+	<input type="hidden" value="{{data['f'][1]}}" name="from">
+	<input type="hidden" value="{{k}}" name="n">
+	<input type="hidden" value={{g.layer|default('m')}} name="l">
+    <p>{{data['c']}}</p>
+	<div class="w3-bar">
+
+{% if data.get('l',None) %}
+<span id="likes" class="w3-bar-item w3-button">{{data.l.get('n')}} likes</span>{% endif %}{% if false(data.get('ul',None)) %}
+<button class="w3-bar-item w3-button" onclick="likef(event)">Like</button>{% endif %}
+{% if data.get('sub',None) %}
+<button class="w3-bar-item w3-button" onclick="vreplyf(event)">View replies</button>
+{% else %}
+<button class="w3-bar-item w3-button" onclick="replyf(event)">Reply</button>
+{% endif %}
+</div></div><hr>
+  {% endfor %}{% else %}no comments{% endif %}
+  
+ 

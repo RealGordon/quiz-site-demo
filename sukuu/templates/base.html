@@ -1,0 +1,75 @@
+<!doctype html><html><head><title>{% block title%}{% endblock%}</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+{% block meta%}{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/static/js/jquery.smartmenus.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('.sm').smartmenus();
+}); 
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+</script>
+{% block css%} <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link href="/static/css/sm-blue.css" rel="stylesheet" >
+{% endblock%}
+
+<style type="text/css">
+ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+.w3-sidebar {
+  z-index: 3;
+  width: 250px;
+  top: 43px;
+  bottom: 0;
+  height: inherit;
+}
+</style>
+{% block myformat %}{% endblock %}
+</head>
+
+<body>
+<header>
+{%block header%}
+{%endblock%}<!-- Navbar -->
+<div>
+  <ul class="sm sm-blue" id="menu">
+    
+   <li> <a href="/" >sukuuhub</a></li>
+   <li> <a href="{{url_for('home.index')}}" >Home</a></li>
+	<li> <a href="/confessions" >Confessions</a></li>
+    {% if g.user %}
+	<li><a href="javascript:void(0)" class="has-submenu">{{g.user.name}}
+	<span class="sub-arrow">+</span></a>
+		<ul class="sm-nowrap"><li><a href="{{url_for('auth.logout')}}">Logout</a></li></ul></li>
+		{% else %}
+		<li><a href="/login" >Login</a></li>
+	{% endif %}{% if request.path != url_for('queryquestions.ques')%}
+	<li><a href="javascript:void(0)" onclick="w3_open()">Side Menu</a></li>
+{% endif %}
+<li> <a href="#" >About</a></li>
+</ul>
+</div>
+ 
+</header>
+{% block content %}{% endblock %}
+
+</body>
+{% block scripts%}{% endblock%}
+</html>
