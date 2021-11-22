@@ -1,0 +1,41 @@
+﻿runtime : python37
+entrypoint : gunicorn "sukuu:create_app()"
+handlers:
+  - url: (^(/)$|(/index))
+    static_files: public/index.html
+    upload: public/index\.html
+    secure: always
+  - url: /images
+    static_dir: public/images
+    secure: always
+  - url: /fonts
+    static_dir: public/fonts
+    secure: always
+  - url: /js
+    static_dir: public/js
+    secure: always
+  - url: /css
+    static_dir: public/css
+    secure: always
+  - url: /sitemap
+    static_files: sitemap.xml
+    upload: sitemap\.xml
+  - url: /static
+    secure: always
+    static_dir: public
+  - url: /login
+    secure: always
+    static_files: public/html/login.html
+    upload: public/html/login\.html
+  - url: /contact
+    secure: always
+    static_files: public/html/contact.html
+    upload: public/html/contact\.html
+  - url: /make/test
+    secure: always
+    static_files: public/html/makeTest.html
+    upload: public/html/makeTest\.html
+  - url: /.*
+    secure: always
+    redirect_http_response_code: 301
+    script: auto
